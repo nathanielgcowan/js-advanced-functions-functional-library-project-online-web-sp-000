@@ -59,6 +59,7 @@ const fi = (function() {
       // and doesn't traverse the entire collection.
 
     },
+<<<<<<< HEAD
 
     filter: function(collection, predicate) {
       // empty array
@@ -120,10 +121,74 @@ const fi = (function() {
       // Returns a sorted copy of array,
     },
 
+=======
+
+    filter: function(collection, predicate) {
+      // empty array
+      let newcollection = []
+      // loop through the array elements.
+      // Looks through each value in the collection,
+      for (let i = 0; i < collection.length; i++) {
+        if (predicate(collection[i]))
+        newcollection.push(collection[i])
+      }
+      // returning an array of all the values that pass a truth test (predicate).
+      return newcollection
+    },
+
+    size: function(collection) {
+      // Return the number of values in the collection.
+      if (collection.isArray) {
+        return collection.length
+      } else {
+        return Object.keys(collection).length
+      }
+    },
+
+    first: function(array, n=false) {
+      // Returns the first element of an array. Passing n will return the first n elements of the array.
+      if (n) {
+        return array.slice(0,n)
+      } else {
+        return array[0]
+      }
+    },
+
+    last: function(array, n=false) {
+      // Returns the last element of an array.
+      // Passing n will return the last n elements of the array.
+      if (n) {
+        return array.splice(array.length-n,array.length)
+      } else {
+        return array[array.length-1]
+      }
+    },
+
+    compact: function(array) {
+      // Returns a copy of the array with all falsy values removed.
+      // In JavaScript, false, null, 0, "", undefined and NaN are all falsy.
+      let newarray = array.filter(Boolean);
+      return newarray
+    },
+
+    sortBy: function(array, callback) {
+      // ranked in ascending order by the results of running each value through callback.
+      // The values from the original array should be retained within the sorted copy,
+      let newarray = array.slice()
+      return newarray.sort(function(a,b){
+        return callback(a) - callback(b)
+      })
+      // just in ascending order.
+
+      // Returns a sorted copy of array,
+    },
+
+>>>>>>> 6a9c7f8e43a57e53bb88f64249261228ddb0e954
     flatten: function() {
     },
 
 
+<<<<<<< HEAD
     uniq: function(array, isSorted=false, iteratee=false) {
       if(!isSorted){
         array = array.sort((a, b)=>a<b)
@@ -165,6 +230,17 @@ const fi = (function() {
       //   }
       //   return array.filter(unique)
       // }
+=======
+    uniq: function(array, isSorted=false, callback=false) {
+      if(isSorted) {
+
+      } else {
+        let unique = (value, index, self) => {
+          return self.indexOf(value) === index
+        }
+        return array.filter(unique)
+      }
+>>>>>>> 6a9c7f8e43a57e53bb88f64249261228ddb0e954
 
     },
 
