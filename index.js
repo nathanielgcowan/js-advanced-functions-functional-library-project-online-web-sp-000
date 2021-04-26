@@ -120,52 +120,40 @@ const fi = (function() {
       // Returns a sorted copy of array,
     },
 
-    flatten: function() {
+    flatten: function(array, shallow, newArray=[]) {
+
+        let app = Array.from(new Set(array))
+        if (shallow == undefined) {
+          return app.flat(Infinity);
+        } else {
+          return app.flat(1);
+        }
+
     },
 
-
-    uniq: function(array, isSorted=false, iteratee=false) {
-      if(!isSorted){
-        array = array.sort((a, b)=>a<b)
-      }
-      let newArray = [];
-      for(let i=0; i < array.length; i++){
-        let found = false;
-        for(let j=0; j < newArray.length; j++){
-          if(iteratee){
-            if(newArray[j]===iteratee(array[i])){
-              found = true
-            }
-          }else{
-            if(newArray[j]===array[i]){
-              found = true;
-            }
-          
+    uniq: function(array, isSorted=false, iteratee) {
+      if (isSorted) {
+        let arraySorted = [array[0]]
+        for (let i = 1; i < array.length; i++) {
+          if (!arraySorted[array[i]])
+          arraySorted.push(array[i])
+        }
+        return arraySorted
+      } else if (!iteratee) {
+        let app = Array.from(new Set(array))
+        return app
+      } else {
+        let arrayOne = []
+        let arrayTwo = []
+        for (let i of array) {
+          let changedI = iteratee(i)
+          if (!arrayOne.includes(changedI)) {
+            arrayOne.push(changedI)
+            arrayTwo.push(i)
           }
         }
-
-        if(!found){
-          if(iteratee){
-            newArray.push(iteratee(array[i]));
-          }else{
-            newArray.push(array[i]);
-          }
-        }
-
+        return arrayTwo
       }
-      return newArray;
-
-
-
-      // if(isSorted) {
-
-      // } else {
-      //   let unique = (value, index, self) => {
-      //     return self.indexOf(value) === index
-      //   }
-      //   return array.filter(unique)
-      // }
-
     },
 
     keys: function(object) {
